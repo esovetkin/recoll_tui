@@ -1,0 +1,21 @@
+#!/bin/bash
+
+query="$@"
+
+src_dir=$(dirname $(realpath "$0"))
+
+recoll -t -l -q "${query}" | \
+    gawk -f "${src_dir}/recoll_process.awk" | \
+    fzf \
+        --reverse \
+        --header-lines=2 \
+        --border=rounded \
+        --no-mouse \
+        --preview "${src_dir}/preview.sh \"${query}\" {}" \
+        --preview-window='down:20:hidden' \
+        --bind "alt-p:toggle-preview" \
+        --bind "alt-up:preview-page-up,alt-down:preview-page-down" \
+        --bind "enter:execute(${src_dir}/open.sh {})" \
+        --bind "alt-o:execute(${src_dir}/open_with.sh {})" \
+        --bind "f3:execute(${src_dir}/view.sh {})" \
+        --bind "f4:execute(${src_dir}/edit.sh {})"
