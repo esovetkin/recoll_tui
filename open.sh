@@ -1,3 +1,5 @@
 #!/bin/bash
 
-urxvtc -e mimeopen $(echo "$@" | cut -f2)
+fn=$(echo "$@" | cut -f2)
+
+mimeopen "${fn}"

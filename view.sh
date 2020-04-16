@@ -1,3 +1,4 @@
 #!/bin/bash
 
-urxvtc -e less $(echo "$@" | cut -f2)
+fn=$(echo "$@" | cut -f2)
+less "${fn}"

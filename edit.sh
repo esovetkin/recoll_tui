@@ -1,3 +1,4 @@
 #!/bin/bash
 
-urxvtc -e emacsclient -t $(echo "$@" | cut -f2)
+fn=$(echo "$@" | cut -f2)
+emacsclient -t "${fn}"
