@@ -26,7 +26,7 @@ function recoll_query
 
 while true
 do
-    read -p "Enter your query: " query
+    read -e -p "Enter your query: " query
     recoll_query "${query}"
     test $? -eq 130 && break
 done
