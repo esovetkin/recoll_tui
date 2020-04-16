@@ -4,18 +4,29 @@ query="$@"
 
 src_dir=$(dirname $(realpath "$0"))
 
-recoll -t -l -q "${query}" | \
-    gawk -f "${src_dir}/recoll_process.awk" | \
-    fzf \
-        --reverse \
-        --header-lines=2 \
-        --border=rounded \
-        --no-mouse \
-        --preview "${src_dir}/preview.sh \"${query}\" {}" \
-        --preview-window='down:20:hidden' \
-        --bind "alt-p:toggle-preview" \
-        --bind "alt-up:preview-page-up,alt-down:preview-page-down" \
-        --bind "enter:execute(urxvtc -e ${src_dir}/open.sh {})" \
-        --bind "alt-o:execute(urxvtc -e ${src_dir}/open_with.sh {})" \
-        --bind "f3:execute(urxvtc -e ${src_dir}/view.sh {})" \
-        --bind "f4:execute(urxvtc -e ${src_dir}/edit.sh {})"
+function recoll_query
+{
+    query="$1"
+    recoll -t -l -q "${query}" | \
+        gawk -f "${src_dir}/recoll_process.awk" | \
+        fzf \
+            --reverse \
+            --header-lines=2 \
+            --border=rounded \
+            --no-mouse \
+            --preview "${src_dir}/preview.sh \"${query}\" {}" \
+            --preview-window='down:20:hidden' \
+            --bind "alt-p:toggle-preview" \
+            --bind "alt-up:preview-page-up,alt-down:preview-page-down" \
+            --bind "enter:execute(urxvtc -e ${src_dir}/open.sh {})" \
+            --bind "alt-o:execute(urxvtc -e ${src_dir}/open_with.sh {})" \
+            --bind "f3:execute(urxvtc -e ${src_dir}/view.sh {})" \
+            --bind "f4:execute(urxvtc -e ${src_dir}/edit.sh {})"
+}
+
+while true
+do
+    read -p "Enter your query: " query
+    recoll_query "${query}"
+    test $? -eq 130 && break
+done
