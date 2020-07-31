@@ -20,6 +20,7 @@ function recoll_query
             --bind "alt-up:preview-page-up,alt-down:preview-page-down" \
             --bind "enter:execute(urxvtc -e ${src_dir}/open.sh {})" \
             --bind "alt-o:execute(urxvtc -e ${src_dir}/open_with.sh {})" \
+            --bind "alt-c:execute(urxvtc -e ${src_dir}/copy_path.sh {})" \
             --bind "f3:execute(urxvtc -e ${src_dir}/view.sh {})" \
             --bind "f4:execute(urxvtc -e ${src_dir}/edit.sh {})"
 }
